@@ -46,17 +46,30 @@ export default function InspirationPage() {
           "67b03a08002c73946ffd",
           "67b03a24003834d22fb8",
           [Query.orderDesc("$createdAt")]
-        )
-        setDesigns(response.documents)
-      } catch (error) {
-        toast.error("Failed to fetch designs")
-      } finally {
-        setLoading(false)
-      }
-    }
+        );
 
-    fetchDesigns()
-  }, [])
+        // Map the response to match DesignInspiration structure
+        const formattedDesigns: DesignInspiration[] = response.documents.map((doc) => ({
+          $id: doc.$id,
+          title: doc.title,
+          description: doc.description,
+          image_url: doc.image_url,
+          tags: doc.tags,
+          likes: doc.likes,
+        }));
+
+        setDesigns(formattedDesigns);
+      } catch (error) {
+        toast.error("Failed to fetch designs");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchDesigns();
+  }, []);
+
+
 
   const handleLikeDesign = (id: string) => {
     setLikedDesigns(prev =>
@@ -111,8 +124,8 @@ export default function InspirationPage() {
             `
 
             return (
-              <Card 
-                key={design.$id} 
+              <Card
+                key={design.$id}
                 className={`${cardClassName} group cursor-pointer overflow-hidden hover:shadow-xl`}
                 onClick={() => setSelectedDesign(design)}
               >
@@ -139,7 +152,7 @@ export default function InspirationPage() {
                             handleLikeDesign(design.$id)
                           }}
                         >
-                          <Heart 
+                          <Heart
                             className={`h-4 w-4 ${likedDesigns.includes(design.$id) ? "fill-red-500 text-red-500" : ""}`}
                           />
                         </Button>
@@ -148,9 +161,9 @@ export default function InspirationPage() {
                         <Tags className="h-3 w-3 text-white/70 flex-shrink-0" />
                         <div className="flex flex-wrap gap-1 overflow-hidden">
                           {design.tags.map((tag) => (
-                            <Badge 
-                              key={tag} 
-                              variant="secondary" 
+                            <Badge
+                              key={tag}
+                              variant="secondary"
                               className="text-xs bg-white/10 hover:bg-white/20 text-white border-none backdrop-blur-sm"
                             >
                               {tag}
@@ -167,13 +180,13 @@ export default function InspirationPage() {
         </div>
       )}
 
-      <Drawer.Root 
-        open={selectedDesign !== null} 
+      <Drawer.Root
+        open={selectedDesign !== null}
         onOpenChange={(open) => !open && setSelectedDesign(null)}
       >
         <Drawer.Portal>
           <Drawer.Overlay className="fixed inset-0 bg-black/40" />
-          <Drawer.Content 
+          <Drawer.Content
             className="bg-background flex flex-col rounded-t-[10px] mt-24 fixed bottom-0 left-0 right-0 max-h-[96%]"
             aria-label={selectedDesign ? `Design Details: ${selectedDesign.title}` : "Design Details"}
           >
