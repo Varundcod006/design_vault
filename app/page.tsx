@@ -105,7 +105,7 @@ export default function Home() {
         complete: (result: any) => {
           setMyData(result.data[0]);
           // set_myusername(result.data.Username);
-          console.log(result)
+          // console.log(result)
         },
       });
     };
@@ -113,10 +113,50 @@ export default function Home() {
     fetchData();
 
   }, []);
-  console.log(my_data);
+  // console.log(my_data);
+  const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
+  const [isHovering, setIsHovering] = useState(false);
+
+  useEffect(() => {
+    const updateCursorPosition = (e: MouseEvent) => {
+      setCursorPosition({ x: e.clientX, y: e.clientY });
+    };
+
+    window.addEventListener('mousemove', updateCursorPosition);
+
+    return () => {
+      window.removeEventListener('mousemove', updateCursorPosition);
+    };
+  }, []);
+
+  useEffect(() => {
+    const handleMouseEnter = () => setIsHovering(true);
+    const handleMouseLeave = () => setIsHovering(false);
+
+    const hoverElements = document.querySelectorAll('.hover-target');
+    hoverElements.forEach((element) => {
+      element.addEventListener('mouseenter', handleMouseEnter);
+      element.addEventListener('mouseleave', handleMouseLeave);
+    });
+
+    return () => {
+      hoverElements.forEach((element) => {
+        element.removeEventListener('mouseenter', handleMouseEnter);
+        element.removeEventListener('mouseleave', handleMouseLeave);
+      });
+    };
+  }, []);
 
   return (
     <div className="flex flex-col">
+      <div
+        className={`custom-cursor ${isHovering ? 'hover-effect' : ''}`}
+        style={{
+          left: `${cursorPosition.x}px`,
+          top: `${cursorPosition.y}px`,
+        }}
+      />
+
       <Head>
         <link rel="icon" href={my_data.Profile} />
       </Head>
@@ -129,20 +169,17 @@ export default function Home() {
           <div className="max-w-[64rem] mx-auto space-y-8 text-center">
 
 
-            <div data-layer="My Tag" className="MyTag glow" style={{ width: '50%', height: '100%', justifyContent: 'center', alignItems: 'center', gap: 16, display: 'inline-flex', paddingTop: "60px" }}>
+            <div data-layer="My Tag" className="MyTag glow" style={{ width: '50%', height: '100%', justifyContent: 'center', alignItems: 'center', gap: 24, display: 'inline-flex', paddingTop: "60px" }}>
               <div data-layer="Profile" className="Profile" style={{
                 width: 52, height: 52, position: 'relative', overflow: 'hidden', borderRadius: 100,
-
+                background: 'linear-gradient(156deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0) 100%)',
+                flexShrink: 0
               }}>
-                <div data-layer="Background" className="Background" style={{
-                  width: 52, height: 52, left: 0, top: 0, position: 'absolute', background: 'linear-gradient(156deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0) 100%)', borderRadius: 9999,
-
-                }} />
-                <img data-layer="Image" className="Image" style={{ width: 52, height: 52, left: 1, top: 4, position: 'absolute' }} src={my_data.Profile} />
+                <img data-layer="Image" className="Image" style={{ width: 52, height: 52 }} src={my_data.Profile} />
               </div>
-              <div data-layer="Texts" className="Texts" style={{ width: 166, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 5, display: 'inline-flex' }}>
-                <div data-layer="Name" className="Name" style={{ alignSelf: 'stretch', color: 'white', fontSize: 16, textAlign: 'left', fontWeight: '700', wordWrap: 'break-word' }}>{my_data.Name}</div>
-                <div data-layer="username" className="Username" style={{ alignSelf: 'stretch', opacity: 0.60, color: 'white', fontSize: 12, fontWeight: '400', wordWrap: 'break-word', textAlign: "left" }}>{my_data.Username}</div>
+              <div data-layer="Texts" className="Texts" style={{ flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 4, display: 'inline-flex' }}>
+                <div data-layer="username" className="Username" style={{ opacity: 0.80, fontSize: 16, fontWeight: '400', wordWrap: 'break-word', textAlign: "left" }}>{my_data.Username}</div>
+                <div data-layer="Name" className="Name" style={{ fontSize: 16, textAlign: 'left', fontWeight: '700', wordWrap: 'break-word' }}>{my_data.Name}</div>
               </div>
             </div>
 
@@ -158,7 +195,7 @@ export default function Home() {
 
             <div className="flex flex-wrap items-center justify-center gap-4 glow" >
               <Button asChild size="lg" >
-                <Link href="/palettes" className="gap-2">
+                <Link href="/palettes" className="gap-2 hover-target">
                   Explore Palettes
                   <ArrowRight className="h-4 w-4" />
                 </Link>
@@ -181,7 +218,7 @@ export default function Home() {
           {/* Stats */}
 
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-4 max-w-4xl mx-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-4 max-w-4xl mx-auto ">
             {[
               { label: 'Color Palettes', value: stats.colorPalettes },
               { label: 'UI Designs', value: stats.uiDesigns },
@@ -203,7 +240,7 @@ export default function Home() {
       </section>
 
       {/* Features Section */}
-      <section className="container space-y-12 py-24 px-4 sm:px-8 md:px-16">
+      <section className="container space-y-12 py-24 px-4 sm:px-8 md:px-16 w-full ">
         <div className="max-w-[58rem] mx-auto text-center space-y-4 glow">
           <h2 className="font-bold text-3xl sm:text-4xl md:text-5xl">
             Just for you.!
