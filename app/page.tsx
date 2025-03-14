@@ -4,7 +4,11 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Palette, Layout, TrendingUp, ArrowRight } from "lucide-react";
 import Link from "next/link";
-import { Client, Databases, Account} from "appwrite";
+import { Client, Databases, Account } from "appwrite";
+import Papa from 'papaparse';
+import Head from 'next/head';
+import Logo from "../public/Logo/Logo.png"
+
 
 interface Stats {
   colorPalettes: number;
@@ -77,9 +81,45 @@ export default function Home() {
 
   }, [])
 
+  const [my_data, setMyData] = useState({
+    Username: "rpjadeja168",
+    Name: "Rajendrashinh jadeja",
+    Title: "Welcome to the world of",
+    Title_Key: "Design",
+    Description: "Discover stunning color palettes and get inspired by the latest UI design trends. Perfect for designers and developers.",
+    Profile: "https://www.figma.com/file/Ziwkb2v67jyEVeYofxYTax/image/f0ba28847fd9686f1caad6da0378f4a9c975b215",
+    Tagline: "✨ Your Gateway to Stunning Design"
+
+  });
+  // const [my_username, set_myusername] = useState("rpjadeja168");
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const sheetUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSbKm4Ep-1xUxOp4AOMsEQmeSiXtQwkwDqzUSm1gZ3jX6KtfIENpdXtCmixLkl9pbULWkVmxrlHApGJ/pub?gid=0&single=true&output=csv';
+      const response = await fetch(sheetUrl);
+      const text = await response.text();
+
+      Papa.parse(text, {
+        header: true, // Use the first row as headers
+        dynamicTyping: true, // Convert numbers and booleans automatically
+        complete: (result: any) => {
+          setMyData(result.data[0]);
+          // set_myusername(result.data.Username);
+          console.log(result)
+        },
+      });
+    };
+
+    fetchData();
+
+  }, []);
+  console.log(my_data);
 
   return (
     <div className="flex flex-col">
+      <Head>
+        <link rel="icon" href={my_data.Profile} />
+      </Head>
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center px-4 sm:px-16">
         {/* <div className="absolute inset-0 noise opacity-[0.03]"  />
@@ -98,23 +138,22 @@ export default function Home() {
                   width: 52, height: 52, left: 0, top: 0, position: 'absolute', background: 'linear-gradient(156deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0) 100%)', borderRadius: 9999,
 
                 }} />
-                <img data-layer="Image" className="Image" style={{ width: 52, height: 52, left: 1, top: 4, position: 'absolute' }} src={"https://www.figma.com/file/Ziwkb2v67jyEVeYofxYTax/image/f0ba28847fd9686f1caad6da0378f4a9c975b215"} />
+                <img data-layer="Image" className="Image" style={{ width: 52, height: 52, left: 1, top: 4, position: 'absolute' }} src={my_data.Profile} />
               </div>
               <div data-layer="Texts" className="Texts" style={{ width: 166, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 5, display: 'inline-flex' }}>
-                <div data-layer="Name" className="Name" style={{ alignSelf: 'stretch', color: 'white', fontSize: 16, textAlign: 'left', fontWeight: '700', wordWrap: 'break-word' }}>Rajendrashinh jadeja</div>
-                <div data-layer="username" className="Username" style={{ alignSelf: 'stretch', opacity: 0.60, color: 'white', fontSize: 12, fontWeight: '400', wordWrap: 'break-word', textAlign: "left" }}>@rpjadeja168</div>
+                <div data-layer="Name" className="Name" style={{ alignSelf: 'stretch', color: 'white', fontSize: 16, textAlign: 'left', fontWeight: '700', wordWrap: 'break-word' }}>{my_data.Name}</div>
+                <div data-layer="username" className="Username" style={{ alignSelf: 'stretch', opacity: 0.60, color: 'white', fontSize: 12, fontWeight: '400', wordWrap: 'break-word', textAlign: "left" }}>{my_data.Username}</div>
               </div>
             </div>
 
 
             <h1 className="font-bold text-4xl sm:text-5xl md:text-6xl lg:text-7xl bg-clip-text text-transparent bg-gradient-to-b from-foreground to-foreground/70">
-              Welcome to the world of
-              <span className="text-primary block mt-2">Design</span>
+              {my_data.Title}
+              <span className="text-primary block mt-2">{my_data.Title_Key}</span>
             </h1>
 
             <p className="max-w-[42rem] mx-auto leading-normal text-muted-foreground text-base sm:text-xl sm:leading-8">
-              Discover stunning color palettes and get inspired by the latest UI
-              design trends. Perfect for designers and developers.
+              {my_data.Description}
             </p>
 
             <div className="flex flex-wrap items-center justify-center gap-4 glow" >
@@ -131,7 +170,7 @@ export default function Home() {
             <br className='w-12' />
             <div className="inline-block p-1 mx-auto">
               <div className="glass px-4 py-1.5 rounded-full text-sm font-medium">
-                ✨ Your Gateway to Stunning Design
+                {my_data.Tagline}
               </div>
             </div>
 
@@ -142,7 +181,7 @@ export default function Home() {
           {/* Stats */}
 
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-4 max-w-4xl mx-auto">
             {[
               { label: 'Color Palettes', value: stats.colorPalettes },
               { label: 'UI Designs', value: stats.uiDesigns },
