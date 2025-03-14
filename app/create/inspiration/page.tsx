@@ -19,6 +19,7 @@ export default function CreateInspirationPage() {
   const [tagInput, setTagInput] = useState("")
   const [isLoading, setIsLoading] = useState(false)
   const router = useRouter()
+  const [error, setError] = useState(null)
 
   // Initialize Appwrite
   const client = new Client()
@@ -132,8 +133,9 @@ export default function CreateInspirationPage() {
 
       toast.success("Inspiration post saved successfully!")
       router.push("/inspiration")
-    } catch (error) {
+    } catch (error: any) {
       console.error("Save error:", error)
+      setError(error.message)
       toast.error("Failed to save inspiration post")
     } finally {
       setIsLoading(false)
@@ -141,12 +143,14 @@ export default function CreateInspirationPage() {
   }
 
   return (
-    <div className="container max-w-4xl py-8">
+    <div className="container max-w-4xl py-8 px-24 mx-auto my-24">
       <div className="space-y-6">
         <div className="space-y-2">
-          <h1 className="text-3xl font-bold">Create Inspiration Post</h1>
-          <p className="text-muted-foreground">
-            Share your design work with the community
+          <h1 className="text-3xl font-bold text-center">Create Inspiration Post</h1>
+          <p className="text-muted-foreground text-center" style={{
+            color: error?"red":"gray"
+          }} >
+            {error?error:"Share your design work with the community"}
           </p>
         </div>
 

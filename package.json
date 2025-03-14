@@ -1,5 +1,5 @@
 {
-  "name": "design_vault",
+  "name": "rpjadeja168",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -44,7 +44,7 @@
     "@types/node": "20.6.2",
     "@types/react": "18.2.22",
     "@types/react-dom": "18.2.7",
-    "appwrite": "^17.0.0",
+    "appwrite": "^17.0.1",
     "autoprefixer": "10.4.15",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",

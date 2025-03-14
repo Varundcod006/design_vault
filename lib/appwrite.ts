@@ -5,7 +5,7 @@ const client = new Client()
   .setEndpoint('https://cloud.appwrite.io/v1')
   .setProject('67b0397b000fa8add446');
 
-const account = new Account(client);
+export const account = new Account(client);
 
 // Auth helper functions
 export const auth = {
@@ -34,6 +34,8 @@ export const auth = {
   getCurrentUser: async () => {
     try {
       const user = await account.get();
+      console.log(user);
+      
       return user;
     } catch (error) {
       console.error('Get user error:', error);

@@ -29,8 +29,8 @@ export default function RootLayout({
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <AuthCheck>
             <div className="relative flex min-h-screen flex-col">
-              <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 px-14">
-                <div className="container flex h-14 items-center w-full">
+              <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80 px-14">
+                <div className="container flex h-14 items-center w-full gap-4">
                   <MainNav />
                   <div className="flex flex-1 items-center justify-between space-x-2 md:justify-end">
                     <ModeToggle />

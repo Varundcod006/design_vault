@@ -95,24 +95,25 @@ export default function PalettesPage() {
   }, []);
 
   return (
-    <div className="container py-8 px-24">
+    <div className="container py-8 px-4 sm:px-12 md:px-12 lg:px-24">
+      {/* Header Section */}
       <div className="flex flex-col items-center space-y-4 text-center mb-8">
-        <h1 className="text-4xl font-bold">Color Palettes</h1>
-        <p className="text-muted-foreground max-w-[600px]">
+        <h1 className="text-3xl sm:text-4xl font-bold">Color Palettes</h1>
+        <p className="text-muted-foreground max-w-[600px] text-sm sm:text-base">
           Discover beautiful color combinations for your next project. Browse
           through our curated collection of color palettes.
         </p>
-        <div className="w-full max-w-sm flex items-center space-x-2">
-          <div className="relative flex-1">
+        <div className="w-full max-w-sm flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-2">
+          <div className="relative flex-1 w-full">
             <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
             <Input
               placeholder="Search by tags..."
-              className="pl-8"
+              className="pl-8 w-full"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
           </div>
-          {/* <Button asChild>
+          {/* <Button asChild className="w-full sm:w-auto">
             <Link href="/create/palette" className="flex items-center gap-2">
               <Plus className="h-4 w-4" />
               Create Palette
@@ -121,13 +122,15 @@ export default function PalettesPage() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {/* Color Palettes Grid */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
         {filteredPalettes.map((palette) => (
           <Card
             key={palette.id}
             className="p-4 hover:shadow-lg transition-shadow cursor-pointer"
             onClick={() => setSelectedPalette(palette)}
           >
+            {/* Color Blocks */}
             <div className="flex h-32 rounded-md overflow-hidden mb-4">
               {palette.colors.map((color, index) => (
                 <div
@@ -147,6 +150,8 @@ export default function PalettesPage() {
                 </div>
               ))}
             </div>
+
+            {/* Color Codes and Actions */}
             <div className="flex items-center justify-between mb-3">
               <div className="flex flex-wrap gap-1">
                 {palette.colors.map((color, index) => (
@@ -191,6 +196,8 @@ export default function PalettesPage() {
                 </Button>
               </div>
             </div>
+
+            {/* Tags */}
             <div className="flex items-center gap-2">
               <Tags className="h-4 w-4 text-muted-foreground" />
               <div className="flex flex-wrap gap-1">
@@ -205,6 +212,7 @@ export default function PalettesPage() {
         ))}
       </div>
 
+      {/* Drawer for Palette Details */}
       <Drawer.Root
         open={selectedPalette !== null}
         onOpenChange={(open) => !open && setSelectedPalette(null)}

@@ -11,6 +11,7 @@ import { Trash2, Plus, Save } from "lucide-react"
 import { toast } from "sonner"
 import { Client, Account, Databases } from "appwrite"
 
+
 export default function CreatePalettePage() {
   const [colors, setColors] = useState<string[]>(["#000000"])
   const [currentColor, setCurrentColor] = useState("#000000")
@@ -18,6 +19,7 @@ export default function CreatePalettePage() {
   const [tagInput, setTagInput] = useState("")
   const [isLoading, setIsLoading] = useState(false)
   const router = useRouter()
+  const [error, setError] = useState(null)
 
   // Initialize Appwrite
   const client = new Client()
@@ -100,8 +102,9 @@ export default function CreatePalettePage() {
 
       toast.success("Palette saved successfully!")
       router.push("/palettes")
-    } catch (error) {
+    } catch (error: any) {
       console.error("Save error:", error)
+      setError(error.message)
       toast.error("Failed to save palette")
     } finally {
       setIsLoading(false)
@@ -109,12 +112,14 @@ export default function CreatePalettePage() {
   }
 
   return (
-    <div className="container max-w-4xl py-8">
+    <div className="container max-w-4xl py-8 px-24 mx-auto my-24">
       <div className="space-y-6">
         <div className="space-y-2">
-          <h1 className="text-3xl font-bold">Create Color Palette</h1>
-          <p className="text-muted-foreground">
-            Create a beautiful color palette by adding up to 6 colors
+          <h1 className="text-3xl font-bold text-center">Create Color Palette</h1>
+          <p className="text-muted-foreground text-center" style={{
+            color: error?"red":"gray"
+          }}>
+            {error?error:"Create a beautiful color palette by adding up to 6 colors"}
           </p>
         </div>
 

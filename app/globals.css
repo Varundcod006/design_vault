@@ -82,8 +82,8 @@
   }
 
   .glow::before {
-    @apply absolute content-[''] -inset-[2px] bg-gradient-to-r from-primary/50 via-primary/20 to-primary/50 rounded-lg blur-xl opacity-75 transition-all duration-1000;
-    animation: glow 4s linear infinite;
+    @apply absolute content-[''] -inset-[2px] bg-gradient-to-r from-primary/50 via-primary/20 to-primary/50 rounded-lg blur-3xl opacity-75 transition-all duration-1000;
+    animation: glow 8s linear infinite;
   }
 
   @keyframes glow {
