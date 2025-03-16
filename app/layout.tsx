@@ -5,6 +5,7 @@ import { ThemeProvider } from '@/components/theme-provider';
 import { MainNav } from '@/components/main-nav';
 import { ModeToggle } from '@/components/mode-toggle';
 import { AuthCheck } from '@/components/auth-check';
+import { BottomNav } from '@/components/BottomNav';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -28,8 +29,9 @@ export default function RootLayout({
       <body className={inter.className}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <AuthCheck>
-            <div className="relative flex min-h-screen flex-col">
-              <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80 px-14 backdrop-blur-xl">
+            <div className="relative flex min-h-screen flex-col overflow-x-hidden">
+              {/* Show header only on larger screens */}
+              <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80 px-4 md:px-14 backdrop-blur-xl hidden md:block">
                 <div className="container flex h-16 items-center w-full gap-4">
                   <MainNav />
                   <div className="flex flex-1 items-center justify-between space-x-2 md:justify-end">
@@ -37,7 +39,12 @@ export default function RootLayout({
                   </div>
                 </div>
               </header>
-              <main className="flex-1">{children}</main>
+
+              {/* Main content */}
+              <main className="flex-1 pb-16 md:pb-0">{children}</main>
+
+              {/* Show bottom navigation only on mobile/tablet */}
+              <BottomNav />
             </div>
           </AuthCheck>
         </ThemeProvider>

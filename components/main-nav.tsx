@@ -41,7 +41,7 @@ const NavItem: React.FC<NavItemProps> = ({ href, icon: Icon, label, active }) =>
     <Link href={href} className="relative">
       <div
         className={`relative flex items-center gap-x-2 px-3 py-4 transition-all duration-300
-          ${active ? "text-white border-t-2 border-primary" : "text-foreground"} 
+          ${active ? "text-current border-t-2 border-primary" : "text-foreground"} 
           hover:text-primary`}
       >
         {/* Icon */}

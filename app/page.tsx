@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Palette, Layout, TrendingUp, ArrowRight } from "lucide-react";
+import { Palette, Layout, TrendingUp, ArrowRight, FileX } from "lucide-react";
 import Link from "next/link";
 import { Client, Databases, Account } from "appwrite";
 import Papa from 'papaparse';
@@ -161,7 +161,7 @@ export default function Home() {
         <link rel="icon" href={my_data.Profile} />
       </Head>
       {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center px-4 sm:px-16">
+      <section className="relative min-h-screen flex items-center px-4 sm:px-16 justify-center">
         {/* <div className="absolute inset-0 noise opacity-[0.03]"  />
         <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-primary/5"/> */}
 
@@ -240,7 +240,7 @@ export default function Home() {
       </section>
 
       {/* Features Section */}
-      <section className="container space-y-12 py-24 px-4 sm:px-8 md:px-16 w-full ">
+      <section className="container space-y-12 py-24 px-4 sm:px-8 md:px-16 w-full mx-auto ">
         <div className="max-w-[58rem] mx-auto text-center space-y-4 glow">
           <h2 className="font-bold text-3xl sm:text-4xl md:text-5xl">
             Just for you.!
