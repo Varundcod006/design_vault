@@ -60,10 +60,12 @@ export default function InspirationPage() {
             tags: doc.tags,
             likes: doc.likes,
             views: doc.views,
+            owner: doc.owner_id,
           })
         );
 
         setDesigns(formattedDesigns);
+        console.log(formattedDesigns);
       } catch (error) {
         toast.error("Failed to fetch designs");
       } finally {
@@ -97,7 +99,7 @@ export default function InspirationPage() {
   );
 
   return (
-    <div className="container py-8 px-4 sm:px-16 md:px-18 lg:px-24">
+    <div className="container py-8 px-4 sm:px-16 md:px-18 lg:px-24 mx-auto">
       {/* Header Section */}
       <div className="flex flex-col items-center space-y-4 text-center mb-8 sm:mb-16">
         <h1 className="text-3xl sm:text-4xl font-bold">UI Inspiration</h1>

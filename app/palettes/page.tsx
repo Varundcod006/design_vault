@@ -95,7 +95,7 @@ export default function PalettesPage() {
   }, []);
 
   return (
-    <div className="container py-8 px-4 sm:px-12 md:px-12 lg:px-24">
+    <div className="container py-8 px-4 sm:px-12 md:px-12 lg:px-24 mx-auto">
       {/* Header Section */}
       <div className="flex flex-col items-center space-y-4 text-center mb-8">
         <h1 className="text-3xl sm:text-4xl font-bold">Color Palettes</h1>

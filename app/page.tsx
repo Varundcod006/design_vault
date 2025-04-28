@@ -221,7 +221,7 @@ export default function Home() {
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-4 max-w-4xl mx-auto ">
             {[
               { label: 'Color Palettes', value: stats.colorPalettes },
-              { label: 'UI Designs', value: stats.uiDesigns },
+              { label: 'Designs', value: stats.uiDesigns },
               // { label: 'Active Users', value: stats.activeUsers },
               // { label: 'Daily Inspirations', value: stats.dailyInspirations },
             ].map((stat) => (
